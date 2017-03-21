@@ -126,6 +126,8 @@ func (p *HTTPPool) Set(peers ...string) {
 	}
 }
 
+// PickPeer implements the PeerPicker interface.
+// It returns a peer.ProtoGetter according to the request key.
 func (p *HTTPPool) PickPeer(key string) (ProtoGetter, bool) {
 	p.mu.Lock()
 	defer p.mu.Unlock()

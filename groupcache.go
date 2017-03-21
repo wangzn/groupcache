@@ -50,6 +50,7 @@ type Getter interface {
 // A GetterFunc implements Getter with a function.
 type GetterFunc func(ctx Context, key string, dest Sink) error
 
+// Get implements the Getter interface.
 func (f GetterFunc) Get(ctx Context, key string, dest Sink) error {
 	return f(ctx, key, dest)
 }
@@ -204,6 +205,7 @@ func (g *Group) initPeers() {
 	}
 }
 
+// Get is the entry func to get a value from groupcache.
 func (g *Group) Get(ctx Context, key string, dest Sink) error {
 	g.peersOnce.Do(g.initPeers)
 	g.Stats.Gets.Add(1)
@@ -361,11 +363,11 @@ func (g *Group) populateCache(key string, value ByteView, cache *cache) {
 type CacheType int
 
 const (
-	// The MainCache is the cache for items that this peer is the
+	// MainCache is the cache for items that this peer is the
 	// owner for.
 	MainCache CacheType = iota + 1
 
-	// The HotCache is the cache for items that seem popular
+	// HotCache is the cache for items that seem popular
 	// enough to replicate to this node, even though it's not the
 	// owner.
 	HotCache

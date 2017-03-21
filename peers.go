@@ -44,6 +44,7 @@ type PeerPicker interface {
 // NoPeers is an implementation of PeerPicker that never finds a peer.
 type NoPeers struct{}
 
+// PickPeer implements the PeerPicker interface.
 func (NoPeers) PickPeer(key string) (peer ProtoGetter, ok bool) { return }
 
 var (
